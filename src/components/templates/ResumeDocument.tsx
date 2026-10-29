@@ -1,6 +1,8 @@
-import { Fragment, type CSSProperties, type ReactNode } from "react";
-import { hasContent, SECTION_LABELS, type Resume, type SectionId } from "@/lib/resume";
-import { CertificationEntry, contactItems, EducationEntry, ExperienceEntry, ProjectEntry, SkillsList } from "./parts";
+import { Fragment, type CSSProperties } from "react";
+import { SECTION_LABELS, type Resume, type SectionId } from "@/lib/resume";
+import { contactItems, sectionBody, visibleSections } from "./parts";
+import { Executive, Timeline } from "./styled";
+import { Harvard, Oxford } from "./traditional";
 
 /** A4 at 96 dpi. Print CSS switches the page to real millimetres. */
 export const PAGE_WIDTH = 794;
@@ -13,27 +15,6 @@ const FONT_STACKS = {
 
 /** Sections the Modern template shows in its sidebar. */
 const SIDEBAR_SECTIONS: SectionId[] = ["skills", "education", "certifications"];
-
-function visibleSections(resume: Resume): SectionId[] {
-  return resume.sections.filter((s) => s.visible && hasContent(resume, s.id)).map((s) => s.id);
-}
-
-function sectionBody(resume: Resume, id: SectionId, opts: { stacked?: boolean; chips?: boolean } = {}): ReactNode {
-  switch (id) {
-    case "summary":
-      return <p className="whitespace-pre-line text-slate-700">{resume.summary.trim()}</p>;
-    case "experience":
-      return resume.experience.map((item) => <ExperienceEntry key={item.id} item={item} />);
-    case "projects":
-      return resume.projects.map((item) => <ProjectEntry key={item.id} item={item} />);
-    case "education":
-      return resume.education.map((item) => <EducationEntry key={item.id} item={item} stacked={opts.stacked} />);
-    case "skills":
-      return <SkillsList groups={resume.skills} variant={opts.chips ? "chips" : "inline"} />;
-    case "certifications":
-      return resume.certifications.map((item) => <CertificationEntry key={item.id} item={item} />);
-  }
-}
 
 function Classic({ resume }: { resume: Resume }) {
   const { profile } = resume;
@@ -124,7 +105,7 @@ function Minimal({ resume }: { resume: Resume }) {
   );
 }
 
-const TEMPLATE_COMPONENTS = { classic: Classic, modern: Modern, minimal: Minimal } as const;
+const TEMPLATE_COMPONENTS = { classic: Classic, modern: Modern, minimal: Minimal, oxford: Oxford, harvard: Harvard, executive: Executive, timeline: Timeline } as const;
 
 export function ResumeDocument({ resume }: { resume: Resume }) {
   const { settings } = resume;

@@ -19,7 +19,7 @@ export default function OpenGraphImage() {
             <div style={{ fontSize: 28, color: "#475569" }}>Free · No sign-up · PDF download · Private share links</div>
           </div>
           <div style={{ display: "flex", gap: 12 }}>
-            {["Classic", "Modern", "Minimal"].map((t) => (
+            {["Oxford", "Harvard", "Executive", "Timeline"].map((t) => (
               <div key={t} style={{ display: "flex", fontSize: 22, color: "#3730a3", background: "#fff", border: "2px solid #c7d2fe", borderRadius: 999, padding: "6px 20px" }}>
                 {t}
               </div>

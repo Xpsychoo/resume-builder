@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import {
+  hasContent,
   commaList,
   dateRange,
   displayUrl,
@@ -10,6 +11,8 @@ import {
   type ExperienceItem,
   type Profile,
   type ProjectItem,
+  type Resume,
+  type SectionId,
   type SkillGroup,
 } from "@/lib/resume";
 
@@ -152,4 +155,26 @@ export function CertificationEntry({ item }: { item: CertificationItem }) {
       {item.year && <div className="shrink-0 text-[0.92em] text-slate-500">{item.year}</div>}
     </div>
   );
+}
+
+/** Sections to render, in the user's order, skipping hidden and empty ones. */
+export function visibleSections(resume: Resume): SectionId[] {
+  return resume.sections.filter((s) => s.visible && hasContent(resume, s.id)).map((s) => s.id);
+}
+
+export function sectionBody(resume: Resume, id: SectionId, opts: { stacked?: boolean; chips?: boolean } = {}): ReactNode {
+  switch (id) {
+    case "summary":
+      return <p className="whitespace-pre-line text-slate-700">{resume.summary.trim()}</p>;
+    case "experience":
+      return resume.experience.map((item) => <ExperienceEntry key={item.id} item={item} />);
+    case "projects":
+      return resume.projects.map((item) => <ProjectEntry key={item.id} item={item} />);
+    case "education":
+      return resume.education.map((item) => <EducationEntry key={item.id} item={item} stacked={opts.stacked} />);
+    case "skills":
+      return <SkillsList groups={resume.skills} variant={opts.chips ? "chips" : "inline"} />;
+    case "certifications":
+      return resume.certifications.map((item) => <CertificationEntry key={item.id} item={item} />);
+  }
 }

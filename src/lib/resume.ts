@@ -16,13 +16,33 @@ export const SECTION_LABELS: Record<SectionId, string> = {
   certifications: "Certifications",
 };
 
-export const TEMPLATES = ["classic", "modern", "minimal"] as const;
+export const TEMPLATES = ["classic", "modern", "minimal", "oxford", "harvard", "executive", "timeline"] as const;
 export type TemplateId = (typeof TEMPLATES)[number];
 
 export const TEMPLATE_LABELS: Record<TemplateId, string> = {
   classic: "Classic",
   modern: "Modern",
   minimal: "Minimal",
+  oxford: "Oxford",
+  harvard: "Harvard",
+  executive: "Executive",
+  timeline: "Timeline",
+};
+
+export const TEMPLATE_DESCRIPTIONS: Record<TemplateId, string> = {
+  classic: "Centred header with coloured section rules",
+  modern: "Two columns with a tinted sidebar",
+  minimal: "Lots of white space, labels in the margin",
+  oxford: "Traditional British/academic CV with dates in the margin",
+  harvard: "Classic US career-office format, very ATS-friendly",
+  executive: "Bold dark header for senior and corporate roles",
+  timeline: "Experience and education along a timeline",
+};
+
+/** Font a template is designed around; applied when the template is picked. */
+export const TEMPLATE_FONTS: Partial<Record<TemplateId, FontId>> = {
+  oxford: "serif",
+  harvard: "serif",
 };
 
 export const FONTS = ["sans", "serif"] as const;

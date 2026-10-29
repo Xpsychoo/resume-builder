@@ -2,8 +2,8 @@ export const SITE = {
   name: "ResumeCraft",
   title: "ResumeCraft — Free Resume Builder with Live Preview",
   description:
-    "Build a clean, ATS-friendly resume in minutes. Live A4 preview, three templates, PDF download and private share links. Free, no sign-up — your data stays in your browser.",
-  keywords: ["resume builder", "free resume builder", "CV maker", "ATS friendly resume", "resume PDF", "resume templates", "resume builder India"],
+    "Build a clean, ATS-friendly resume in minutes. Live A4 preview, seven templates (including Oxford and Harvard styles), PDF download and private share links. Free, no sign-up — your data stays in your browser.",
+  keywords: ["resume builder", "free resume builder", "CV maker", "ATS friendly resume", "resume PDF", "resume templates", "resume builder India", "Oxford CV template", "Harvard resume template"],
 } as const;
 
 export function getSiteUrl(): string {

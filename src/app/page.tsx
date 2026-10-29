@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 const FEATURES = [
   { title: "Live A4 preview", text: "See every change instantly, exactly as it will print, with page-break markers." },
-  { title: "Three templates", text: "Classic, Modern and Minimal — switch any time, with your own accent colour and font." },
+  { title: "Seven templates", text: "Oxford, Harvard, Executive, Timeline, Classic, Modern and Minimal — switch any time, with your own accent colour and font." },
   { title: "PDF in one click", text: "Uses your browser's Save as PDF, so text stays selectable and ATS-friendly." },
   { title: "Private share links", text: "Your resume is packed into the link itself. Nothing is uploaded or stored on a server." },
   { title: "Autosave & backups", text: "Work is saved in your browser automatically. Export or import a JSON backup any time." },

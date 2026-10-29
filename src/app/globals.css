@@ -31,6 +31,27 @@
   }
 }
 
+/* Timeline template: a vertical line with one dot per entry. */
+.timeline {
+  margin-left: 4px;
+  padding-left: 14px;
+  border-left: 2px solid color-mix(in srgb, var(--accent) 30%, transparent);
+}
+.timeline > .resume-entry {
+  position: relative;
+}
+.timeline > .resume-entry::before {
+  content: "";
+  position: absolute;
+  top: 0.35em;
+  left: -21px;
+  width: 12px;
+  height: 12px;
+  border-radius: 9999px;
+  background: #fff;
+  border: 2px solid var(--accent);
+}
+
 /*
  * Printing ("Download PDF") shows only the resume at real A4 size: the editor
  * is hidden and the preview's on-screen scaling is removed.

@@ -5,7 +5,13 @@ A free, privacy-first resume builder. Edit on the left, see an exact A4 preview 
 ## Features
 
 - **Live A4 preview** that scales to the screen, with markers showing where printed pages break
-- **Three templates** (Classic, Modern with sidebar, Minimal), accent colour, sans/serif font and compact spacing
+- **Seven templates**, each previewed live in the picker:
+  - **Oxford**: traditional British/academic CV with small-caps headings and dates in the margin
+  - **Harvard**: the classic US career-office format, monochrome and very ATS-friendly
+  - **Executive**: dark header band for senior roles
+  - **Timeline**: experience and education along a vertical timeline
+  - **Classic**, **Modern** (tinted sidebar) and **Minimal**
+- Accent colour, sans/serif font and compact spacing (Oxford and Harvard switch to serif automatically)
 - **Sections:** personal details, summary, experience, projects, education, skills, certifications — reorder them by drag and drop or arrow buttons, and hide the ones you don't need
 - **PDF download** through the browser's print dialog, so text stays selectable (ATS-friendly) and the file is named after you
 - **Private share links:** the resume is compressed (`CompressionStream`) into the URL fragment (`/view#r=…`). Fragments are never sent to the server, so nothing is stored online
@@ -53,7 +59,7 @@ src/
     SharedView.tsx     Read-only /view page
     Preview.tsx        Scaled A4 preview with page-break markers
     editor/            Content and design editors
-    templates/         The three resume templates
+    templates/         The seven resume templates
   lib/
     resume.ts          Data model, sample data, normalisation, safe links
     share.ts           Share-link encoding/decoding

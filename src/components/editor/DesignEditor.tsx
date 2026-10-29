@@ -1,65 +1,46 @@
 "use client";
 
-import { useState, type DragEvent } from "react";
+import { useEffect, useMemo, useRef, useState, type DragEvent } from "react";
 import {
   ACCENT_PRESETS,
   moveItem,
+  sampleResume,
   SECTION_LABELS,
+  TEMPLATE_DESCRIPTIONS,
+  TEMPLATE_FONTS,
   TEMPLATE_LABELS,
   TEMPLATES,
   type Density,
+  type DesignSettings,
   type FontId,
   type Resume,
   type TemplateId,
 } from "@/lib/resume";
 import { DownIcon, EyeIcon, EyeOffIcon, GripIcon, UpIcon } from "../icons";
+import { PAGE_WIDTH, ResumeDocument } from "../templates/ResumeDocument";
 import { cn, IconButton, Panel } from "../ui";
 import type { ResumeActions } from "./actions";
 
-/** Tiny schematic of each template layout. */
-function TemplateThumb({ id, accent }: { id: TemplateId; accent: string }) {
-  const bar = (w: string, extra = "") => <div className={cn("h-1 rounded-full bg-slate-300", extra)} style={{ width: w }} />;
-  if (id === "modern") {
-    return (
-      <div className="flex h-full">
-        <div className="w-[36%] space-y-1 p-1.5" style={{ background: `${accent}18` }}>
-          <div className="h-1.5 w-4/5 rounded-full" style={{ background: accent }} />
-          {bar("70%")}
-          {bar("60%")}
-        </div>
-        <div className="flex-1 space-y-1 p-1.5">
-          {bar("50%", "bg-slate-500")}
-          {bar("90%")}
-          {bar("80%")}
-          {bar("50%", "mt-2 bg-slate-500")}
-          {bar("85%")}
-        </div>
-      </div>
-    );
-  }
-  if (id === "minimal") {
-    return (
-      <div className="space-y-1 p-2">
-        <div className="h-1.5 w-1/2 rounded-full" style={{ background: accent }} />
-        {bar("35%")}
-        <div className="flex gap-1.5 pt-1.5">
-          <div className="w-1/4">{bar("100%")}</div>
-          <div className="flex-1 space-y-1">
-            {bar("90%")}
-            {bar("75%")}
-          </div>
-        </div>
-      </div>
-    );
-  }
+/** Live miniature of a template, rendered with the sample resume and the current style. */
+function TemplateThumb({ id, settings }: { id: TemplateId; settings: DesignSettings }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [scale, setScale] = useState(0.18);
+  const resume = useMemo(() => ({ ...sampleResume(), settings: { ...settings, template: id } }), [id, settings]);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new ResizeObserver(() => setScale(el.clientWidth / PAGE_WIDTH));
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <div className="space-y-1 p-2">
-      <div className="mx-auto h-1.5 w-1/2 rounded-full bg-slate-600" />
-      <div className="mx-auto h-1 w-1/3 rounded-full" style={{ background: accent }} />
-      <div className="h-px w-full" style={{ background: accent }} />
-      {bar("40%", "mt-1 bg-slate-500")}
-      {bar("95%")}
-      {bar("85%")}
+    // Decorative: hidden from assistive tech and the tab order.
+    <div ref={ref} aria-hidden inert className="pointer-events-none relative aspect-[210/297] overflow-hidden bg-white">
+      <div className="absolute top-0 left-0 origin-top-left" style={{ transform: `scale(${scale})` }}>
+        <ResumeDocument resume={resume} />
+      </div>
     </div>
   );
 }
@@ -151,23 +132,32 @@ export function DesignEditor({ resume, actions }: { resume: Resume; actions: Res
   return (
     <div className="space-y-4">
       <Panel title="Template" description="Your content stays the same — only the layout changes">
-        <div role="radiogroup" aria-label="Template" className="grid grid-cols-3 gap-3">
+        <div role="radiogroup" aria-label="Template" className="grid grid-cols-2 gap-3 sm:grid-cols-3">
           {TEMPLATES.map((t) => (
             <button
               key={t}
               type="button"
               role="radio"
               aria-checked={settings.template === t}
-              onClick={() => actions.setSettings({ template: t })}
+              aria-label={TEMPLATE_LABELS[t]}
+              aria-describedby={`template-${t}-desc`}
+              title={TEMPLATE_DESCRIPTIONS[t]}
+              onClick={() => {
+                const font = TEMPLATE_FONTS[t];
+                actions.setSettings(font ? { template: t, font } : { template: t });
+              }}
               className={cn(
                 "overflow-hidden rounded-lg border-2 bg-white text-left transition-colors",
                 settings.template === t ? "border-brand-600 ring-2 ring-brand-600/20" : "border-slate-200 hover:border-slate-300",
               )}
             >
-              <div className="aspect-[3/4] border-b border-slate-100 bg-white">
-                <TemplateThumb id={t} accent={settings.accent} />
+              <div className="border-b border-slate-100">
+                <TemplateThumb id={t} settings={settings} />
               </div>
               <div className="px-2 py-1.5 text-center text-xs font-medium text-slate-700">{TEMPLATE_LABELS[t]}</div>
+              <span id={`template-${t}-desc`} className="sr-only">
+                {TEMPLATE_DESCRIPTIONS[t]}
+              </span>
             </button>
           ))}
         </div>

@@ -63,6 +63,17 @@ describe("Builder", () => {
     expect(within(preview()).queryByRole("heading", { name: "Summary" })).toBeNull();
   });
 
+  it("applies a template's preferred font when it is picked", async () => {
+    const user = userEvent.setup();
+    render(<Builder />);
+    await user.click(screen.getByRole("tab", { name: "design" }));
+    expect(screen.getByRole("radio", { name: "Sans" })).toHaveAttribute("aria-checked", "true");
+
+    await user.click(screen.getByRole("radio", { name: "Oxford" }));
+    expect(screen.getByRole("radio", { name: "Serif" })).toHaveAttribute("aria-checked", "true");
+    expect(preview().style.fontFamily).toMatch(/Georgia/);
+  });
+
   it("creates a share link for the current resume", async () => {
     const user = userEvent.setup();
     render(<Builder />);
