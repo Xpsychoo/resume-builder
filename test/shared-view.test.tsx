@@ -15,7 +15,7 @@ describe("SharedView", () => {
   it("opens a resume from the link fragment", async () => {
     window.location.hash = `#r=${await encodeResume(sampleResume())}`;
     render(<SharedView />);
-    expect(await screen.findByRole("heading", { level: 1, name: "Aarav Mehta" })).toBeInTheDocument();
+    expect(await screen.findByRole("heading", { level: 1, name: "John Doe" })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /Download PDF/ })).toBeInTheDocument();
   });
 

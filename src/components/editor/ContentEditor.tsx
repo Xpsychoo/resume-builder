@@ -7,7 +7,7 @@ import { Button, IconButton, Panel, TextArea, TextField } from "../ui";
 import type { ListItem, ResumeActions } from "./actions";
 
 const PROFILE_FIELDS: Array<{ field: keyof Profile; label: string; placeholder: string; type?: string }> = [
-  { field: "name", label: "Full name", placeholder: "Aarav Mehta" },
+  { field: "name", label: "Full name", placeholder: "John Doe" },
   { field: "title", label: "Job title", placeholder: "Frontend Developer" },
   { field: "email", label: "Email", placeholder: "you@example.com", type: "email" },
   { field: "phone", label: "Phone", placeholder: "+91 98765 43210", type: "tel" },

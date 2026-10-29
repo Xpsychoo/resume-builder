@@ -12,7 +12,7 @@ describe("Builder", () => {
   it("starts with the sample and updates the preview as you type", async () => {
     const user = userEvent.setup();
     render(<Builder />);
-    expect(within(preview()).getByRole("heading", { level: 1 })).toHaveTextContent("Aarav Mehta");
+    expect(within(preview()).getByRole("heading", { level: 1 })).toHaveTextContent("John Doe");
 
     const name = screen.getByLabelText("Full name");
     await user.clear(name);

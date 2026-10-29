@@ -11,7 +11,7 @@ describe("ResumeDocument", () => {
   it.each(TEMPLATES)("renders the %s template with all content", (template) => {
     const base = sampleResume();
     render(<ResumeDocument resume={{ ...base, settings: { ...base.settings, template } }} />);
-    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("Aarav Mehta");
+    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("John Doe");
     expect(screen.getByText("Example Tech Pvt. Ltd.")).toBeInTheDocument();
     expect(screen.getByText(/Cut page load time by 40%/)).toBeInTheDocument();
     expect(screen.getByText("Jan 2023 – Present")).toBeInTheDocument();
@@ -37,9 +37,9 @@ describe("ResumeDocument", () => {
   it("links contact details safely and never renders unsafe URLs as links", () => {
     const base = sampleResume();
     render(<ResumeDocument resume={{ ...base, profile: { ...base.profile, website: "javascript:alert(1)" } }} />);
-    expect(screen.getByRole("link", { name: "aarav.mehta@example.com" })).toHaveAttribute("href", "mailto:aarav.mehta@example.com");
-    const github = screen.getByRole("link", { name: "github.com/aarav-example" });
-    expect(github).toHaveAttribute("href", "https://github.com/aarav-example");
+    expect(screen.getByRole("link", { name: "john.doe@example.com" })).toHaveAttribute("href", "mailto:john.doe@example.com");
+    const github = screen.getByRole("link", { name: "github.com/johndoe-example" });
+    expect(github).toHaveAttribute("href", "https://github.com/johndoe-example");
     expect(github).toHaveAttribute("rel", "noopener noreferrer");
     expect(screen.getByText("javascript:alert(1)").closest("a")).toBeNull();
   });

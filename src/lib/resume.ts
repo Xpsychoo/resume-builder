@@ -158,14 +158,14 @@ export function sampleResume(): Resume {
   return {
     ...emptyResume(),
     profile: {
-      name: "Aarav Mehta",
+      name: "John Doe",
       title: "Frontend Developer",
-      email: "aarav.mehta@example.com",
-      phone: "+91 98765 43210",
-      location: "Jaipur, India",
-      website: "aaravmehta.example.com",
-      linkedin: "linkedin.com/in/aarav-example",
-      github: "github.com/aarav-example",
+      email: "john.doe@example.com",
+      phone: "+91 00000 00000",
+      location: "Your City, India",
+      website: "johndoe.example.com",
+      linkedin: "linkedin.com/in/johndoe-example",
+      github: "github.com/johndoe-example",
     },
     summary:
       "Frontend developer with 3+ years of experience building fast, accessible web apps with React and Next.js. " +
